@@ -4,6 +4,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*test route commit*/
+/*test route commit  */
 
 Auth::routes();
