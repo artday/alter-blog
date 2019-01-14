@@ -21,12 +21,15 @@ class CreateBlogCategoriesTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->integer('order');
+            $table->integer('order')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('parent_id')->references('id')->on('blog_categories');
+            $table->foreign('parent_id')
+                ->references('id')
+                ->on('blog_categories')
+                ->onDelete('set null');
         });
     }
 
