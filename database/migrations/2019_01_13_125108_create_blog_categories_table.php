@@ -15,14 +15,18 @@ class CreateBlogCategoriesTable extends Migration
     {
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id')->unsigned()->index()->nullable();
-            $table->string('name');
+
+            $table->integer('parent_id')->unsigned()->nullable();
+
+            $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->foreign('parent_id')->references('id')->on('blog_categories');
             $table->integer('order');
+
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('parent_id')->references('id')->on('blog_categories');
         });
     }
 
