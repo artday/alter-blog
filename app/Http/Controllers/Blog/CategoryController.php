@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Blog;
 
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class BlogCategoryController extends Controller
+class CategoryController extends BaseController
 {
     /**
      * Display a listing of the resource.
