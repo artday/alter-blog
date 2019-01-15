@@ -4,6 +4,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*test route commit  */
-
 Auth::routes();
+
+Route::namespace('Blog')->prefix('blog')->name('blog.')
+    ->group(function () {
+        Route::resource('category', 'CategoryController');
+        Route::resource('post', 'PostController');
+    });
