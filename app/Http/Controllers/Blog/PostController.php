@@ -14,9 +14,8 @@ class PostController extends BaseController
      */
     public function index()
     {
-        $items = BlogPost::all();
-
-        return view('blog.post.index', compact('items'));
+        $items = BlogPost::paginate(10);
+        return view('blog.posts.index', compact('items'));
     }
 
     /**
@@ -43,7 +42,7 @@ class PostController extends BaseController
 
     public function show(BlogPost $post)
     {
-        return view('blog.post.show', compact('post'));
+        return view('blog.posts.show', compact('post'));
     }
 
     /**
