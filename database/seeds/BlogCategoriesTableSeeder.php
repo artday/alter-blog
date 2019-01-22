@@ -15,7 +15,7 @@ class BlogCategoriesTableSeeder extends Seeder
         $catCnt = 20;
 
         // has parent chance
-        $withParentChance = 25;
+        $withParentChance = 45;
 
         $categories =[];
 
