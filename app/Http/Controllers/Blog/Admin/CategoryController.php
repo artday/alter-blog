@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Blog;
+namespace App\Http\Controllers\Blog\Admin;
 
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
@@ -14,7 +14,8 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        dd(__METHOD__);
+        $items = BlogCategory::paginate(5);
+        return view('blog.admin.category.index', compact('items'));
     }
 
     /**
@@ -30,7 +31,7 @@ class CategoryController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -39,20 +40,9 @@ class CategoryController extends BaseController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\BlogCategory  $blogCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BlogCategory $blogCategory)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\BlogCategory  $blogCategory
+     * @param  \App\Models\BlogCategory $blogCategory
      * @return \Illuminate\Http\Response
      */
     public function edit(BlogCategory $blogCategory)
@@ -63,8 +53,8 @@ class CategoryController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BlogCategory  $blogCategory
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\BlogCategory $blogCategory
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, BlogCategory $blogCategory)
@@ -73,9 +63,20 @@ class CategoryController extends BaseController
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\BlogCategory $blogCategory
+     * @return \Illuminate\Http\Response
+     */
+    public function show(BlogCategory $blogCategory)
+    {
+        //
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\BlogCategory  $blogCategory
+     * @param  \App\Models\BlogCategory $blogCategory
      * @return \Illuminate\Http\Response
      */
     public function destroy(BlogCategory $blogCategory)
