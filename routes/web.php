@@ -8,6 +8,12 @@ Auth::routes();
 
 Route::namespace('Blog')->prefix('blog')->name('blog.')
     ->group(function () {
-        Route::resource('category', 'CategoryController');
-        Route::resource('post', 'PostController');
+        //Route::resource('category', 'CategoryController');
+        Route::resource('posts', 'PostController');
+    });
+
+Route::namespace('Blog\Admin')->prefix('admin/blog')
+    ->group(function () {
+        Route::resource('categories', 'CategoryController')
+            ->except(['show', 'destroy']);
     });
