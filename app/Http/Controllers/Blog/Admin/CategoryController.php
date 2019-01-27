@@ -86,6 +86,5 @@ class CategoryController extends BaseController
     public function destroy(BlogCategory $blogCategory)
     {
         //
-        return;
     }
 }
