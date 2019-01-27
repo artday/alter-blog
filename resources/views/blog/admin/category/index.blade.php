@@ -26,10 +26,7 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>
-                                    {{--<a href="{{ route('blog.admin.categories.edit', $item) }}">
-                                        {{ $item->title }}
-                                    </a>--}}
-                                    <a href="#">
+                                    <a href="{{ route('blog.admin.categories.edit', $item) }}">
                                         {{ $item->title }}
                                     </a>
                                 </td>
