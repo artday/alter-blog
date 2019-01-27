@@ -12,7 +12,7 @@ Route::namespace('Blog')->prefix('blog')->name('blog.')
         Route::resource('posts', 'PostController');
     });
 
-Route::namespace('Blog\Admin')->prefix('admin/blog')
+Route::namespace('Blog\Admin')->prefix('admin/blog')->name('blog.admin.')
     ->group(function () {
         Route::resource('categories', 'CategoryController')
             ->except(['show', 'destroy']);
