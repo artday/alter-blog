@@ -25,7 +25,8 @@ class CategoryController extends BaseController
      */
     public function create()
     {
-        //
+        dd(__METHOD__);
+        return;
     }
 
     /**
@@ -36,7 +37,7 @@ class CategoryController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        return;
     }
 
     /**
@@ -61,6 +62,7 @@ class CategoryController extends BaseController
     public function update(Request $request, BlogCategory $category)
     {
         dd($request->all());
+        return;
     }
 
     /**
@@ -72,6 +74,7 @@ class CategoryController extends BaseController
     public function show(BlogCategory $blogCategory)
     {
         //
+        return;
     }
 
     /**
@@ -83,5 +86,6 @@ class CategoryController extends BaseController
     public function destroy(BlogCategory $blogCategory)
     {
         //
+        return;
     }
 }
