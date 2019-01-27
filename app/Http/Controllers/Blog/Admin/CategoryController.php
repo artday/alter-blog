@@ -42,12 +42,13 @@ class CategoryController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\BlogCategory $blogCategory
+     * @param  \App\Models\BlogCategory $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(BlogCategory $blogCategory)
+    public function edit(BlogCategory $category)
     {
-        //
+        $categories = BlogCategory::all();
+        return view('blog.admin.category.edit', compact('category', 'categories'));
     }
 
     /**
@@ -57,9 +58,9 @@ class CategoryController extends BaseController
      * @param  \App\Models\BlogCategory $blogCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BlogCategory $blogCategory)
+    public function update(Request $request, BlogCategory $category)
     {
-        //
+        dd($request->all());
     }
 
     /**
