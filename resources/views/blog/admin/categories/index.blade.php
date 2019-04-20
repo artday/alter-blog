@@ -5,10 +5,9 @@
             <div class="card">
                 <div class="card-header bg-white border-0">
                     <nav class="navbar navbar-light bg-faded">
-                        {{--
-                        <a href="{{route('blog.admin.categories.create')}}" class="btn btn-primary">Add category</a>
-                        --}}
-                        <a href="#" class="btn btn-primary btn-sm">Add category</a>
+                        <a href="{{route('blog.admin.categories.create')}}"
+                           class="btn btn-primary btn-sm">Add category</a>
+                        {{--<a href="#" class="btn btn-primary btn-sm">Add category</a>--}}
                     </nav>
                 </div>
                 <div class="card-body">
