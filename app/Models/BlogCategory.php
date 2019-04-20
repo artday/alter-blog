@@ -7,15 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BlogCategory extends Model
 {
-//    use SoftDeletes;
-
-    protected $fillable = [
-        'title', 'slug', 'description', 'parent_id'
-    ];
-
-    public function parent()
-    {
-        return $this->belongsTo(BlogCategory::class);
-    }
+    use SoftDeletes;
 
 }
