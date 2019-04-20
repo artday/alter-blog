@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
-use Illuminate\Http\Request;
 use App\Models\BlogCategory;
-use App\Http\Requests\BlogCategoryUpdateRequest;
-use App\Http\Requests\BlogCategoryCreateRequest;
+use Illuminate\Http\Request;
 
 class CategoryController extends BaseController
 {
@@ -17,7 +15,7 @@ class CategoryController extends BaseController
     public function index()
     {
         $items = BlogCategory::paginate(5);
-        return view('blog.admin.categories.index', compact('items'));
+        return view('blog.admin.category.index', compact('items'));
     }
 
     /**
@@ -25,31 +23,20 @@ class CategoryController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(BlogCategory $category)
+    public function create()
     {
-        $category = new BlogCategory;
-        $categories = BlogCategory::all();
-        return view('blog.admin.categories.create', compact('category', 'categories'));
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\BlogCategoryCreateRequest $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BlogCategoryCreateRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->input();
-
-        // TODO: generate slug before validation in Requests
-        if(empty($data['slug'])){
-            $data['slug'] = str_slug($data['title']);
-        }
-
-        $category = BlogCategory::create($data);
-
-        return $category ? $this->index() : back()->with('danger', "Database saving in database");
+        //
     }
 
     /**
@@ -60,32 +47,20 @@ class CategoryController extends BaseController
      */
     public function edit(BlogCategory $category)
     {
-        /* Get categories for parent category selection list */
-        $categories = BlogCategory::where('id', '<>', $category->id)->get(['id', 'title']);
-        return view('blog.admin.categories.edit', compact('category', 'categories'));
+        $categories = BlogCategory::all();
+        return view('blog.admin.category.edit', compact('category', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\BlogCategoryUpdateRequest $request
-     * @param BlogCategory $category
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\BlogCategory $blogCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(BlogCategoryUpdateRequest $request, BlogCategory $category)
+    public function update(Request $request, BlogCategory $category)
     {
-        $data = $request->input();
-
-        // TODO: generate slug before validation in Requests
-        if(empty($data['slug'])){
-            $data['slug'] = str_slug($data['title']);
-        }
-
-        $category->update($data);
-
-        //TODO: Handle Db update Error
-
-        return back()->with("success", "Category was updated");
+        dd($request->all());
     }
 
     /**
@@ -96,7 +71,7 @@ class CategoryController extends BaseController
      */
     public function show(BlogCategory $blogCategory)
     {
-        dd(__METHOD__);
+        //
     }
 
     /**
