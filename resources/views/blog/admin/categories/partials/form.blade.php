@@ -1,12 +1,17 @@
-@extends('layouts.app')
-@section('content')
-    @php
-        /** @var \App\Models\BlogCategory $category */
-        /** @var \Illuminate\Support\Collection $categories */
-    @endphp
-    <form action="{{ route('blog.admin.categories.update', $category) }}" method="POST">
+@php
+    /** @var \App\Models\BlogCategory $category */
+    /** @var \Illuminate\Support\Collection $categories */
+
+    $action = $category->exists ? 'blog.admin.categories.update': 'blog.admin.categories.store'
+@endphp
+
+<form action="{{ route($action, $category->id ? $category: null ) }}" method="POST">
+    @if($category->exists)
         @method('PATCH')
-        @csrf
+        <input type="hidden" name="id" value="{{ $category->id }}">
+    @else @method('PUT')
+    @endif
+    @csrf
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
@@ -21,19 +26,20 @@
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input type="text" id="title" name="title"
-                                           value="{{ $category->title }}"
+                                           value="{{ old('title', $category->title) }}"
                                            class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="slug">Slug</label>
                                     <input type="text" id="slug" name="slug"
-                                           value="{{ $category->slug }}"
+                                           value="{{ old('slug', $category->slug) }}"
                                            class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="parent_id">Parent</label>
                                     <select id="parent_id" name="parent_id" class="form-control">
                                         <option value="" disabled selected>Select parent category</option>
+                                        <option value="">No parent category</option>
                                         @foreach($categories as $parentCategory)
                                             <option value="{{ $parentCategory->id }}"
                                                     @if($parentCategory->id == $category->parent_id) selected @endif>
@@ -44,10 +50,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea name="description" id="description" cols="30" rows="10"
-                                              class="form-control">
-                                        {{ $category->description }}
-                                    </textarea>
+                                    <textarea rows="4" name="description" id="description" cols="30" rows="10"
+                                              class="form-control">{{ old('description', $category->description) }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -93,5 +97,4 @@
                 @endif
             </div>
         </div>
-    </form>
-@endsection
+</form>
