@@ -2,7 +2,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Auth::routes();
 
@@ -12,8 +12,17 @@ Route::namespace('Blog')->prefix('blog')->name('blog.')
         Route::resource('posts', 'PostController');
     });
 
-Route::namespace('Blog\Admin')->prefix('admin/blog')->name('blog.admin.')
+Route::namespace('Blog\Admin')->prefix('admin/blog')->name('blog.admin.categories.')
     ->group(function () {
-        Route::resource('categories', 'CategoryController')
-            ->except(['show', 'destroy']);
+        Route::get('/categories', 'CategoryController@index')->name('index');
+        Route::get('/categories/{category}/edit', 'CategoryController@edit')->name('edit');
+        Route::put('/categories', 'CategoryController@store')->name('store');
+        Route::get('/categories/create', 'CategoryController@create')->name('create');
+        Route::patch('/categories/{category}', 'CategoryController@update')->name('update');
+
+
+       /* Route::resource('categories', 'CategoryController')
+            ->except(['show']);*/
     });
+
+//config();
