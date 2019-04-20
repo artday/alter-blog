@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.22 on 2019-01-23 11:19:06.
+ * Generated for Laravel 5.7.22 on 2019-04-13 19:48:48.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -13395,6 +13395,16 @@ namespace Barryvdh\Debugbar {
     /**
      * 
      *
+     * @method static void alert(string $message)
+     * @method static void critical(string $message)
+     * @method static void debug(string $message)
+     * @method static void emergency(string $message)
+     * @method static void error(string $message)
+     * @method static void info(string $message)
+     * @method static void log(string $message)
+     * @method static void notice(string $message)
+     * @method static void warning(string $message)
+     * @see \Barryvdh\Debugbar\LaravelDebugbar
      */ 
     class Facade {
         
