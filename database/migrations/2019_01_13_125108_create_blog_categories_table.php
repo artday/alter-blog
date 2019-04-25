@@ -22,6 +22,7 @@ class CreateBlogCategoriesTable extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->integer('order')->nullable();
+            $table->boolean('is_published')->default(false);
 
             $table->timestamps();
             $table->softDeletes();
