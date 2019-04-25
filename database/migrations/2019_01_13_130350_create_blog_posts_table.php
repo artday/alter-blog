@@ -35,11 +35,11 @@ class CreateBlogPostsTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')->on('users')
-                ->onDelete('set_null');
+                ->onDelete('set null');
 
             $table->foreign('category_id')
                 ->references('id')->on('blog_categories')
-                ->onDelete('set_null');
+                ->onDelete('set null');
 
             $table->index('is_published');
 
