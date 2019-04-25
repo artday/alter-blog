@@ -4,17 +4,25 @@ namespace App\Http\Controllers\Blog;
 
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
+use App\Repositories\Contracts\BlogPostRepository;
+use App\Repositories\Contracts\BlogCategoryRepository;
+
+use App\Repositories\Eloquent\Criteria\IsLive;
+use App\Repositories\Eloquent\Criteria\ByUser;
+use App\Repositories\Eloquent\Criteria\EagerLoad;
+use App\Repositories\Eloquent\Criteria\LatestFirst;
 
 class PostController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
+     * @param BlogPostRepository $posts
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BlogPostRepository $posts)
     {
-        $items = BlogPost::paginate(10);
+        $items = $posts->withCriteria(new LatestFirst, new IsLive, new ByUser(auth()->id()))->all();
         return view('blog.posts.index', compact('items'));
     }
 
@@ -39,10 +47,11 @@ class PostController extends BaseController
         //
     }
 
-
-    public function show(BlogPost $post)
+    public function show(Request $request, BlogPost $post)
     {
-        return view('blog.posts.show', compact('post'));
+        return $post->is_published ?
+            view('blog.posts.show', compact('post')):
+            abort(404);
     }
 
     /**
@@ -77,5 +86,31 @@ class PostController extends BaseController
     public function destroy(BlogPost $blogPost)
     {
         //
+    }
+
+
+    /**
+     * @param BlogCategoryRepository $categories
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function byCategories(BlogCategoryRepository $categories)
+    {
+        $categories = $categories
+            ->withCriteria([
+                new IsLive(),
+                new EagerLoad(['posts', 'posts.user',])
+            ])->all();
+
+//        $categories->load(['posts', 'posts.user']);
+        return view('blog.categories.index', compact('categories'));
+    }
+
+    public function categoryPosts(BlogCategoryRepository $categories, $slug)
+    {
+        $category = $categories
+            ->withCriteria(new EagerLoad(['posts.user']))
+            ->findBySlug($slug);
+
+        return view('blog.categories.show', compact('category'));
     }
 }
