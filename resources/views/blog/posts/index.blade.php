@@ -6,6 +6,7 @@
             <article class="mb-5">
                 <header>
                     <h4>{{$item->title}}</h4>
+                    <small>by {{$item->user->name}}, {{$item->created_at->diffForHumans()}}</small>
                 </header>
                 <section>
                     {{$item->excerpt}}
@@ -19,7 +20,7 @@
             </article>
         @endforeach
     </section>
-    <section class="mb-5">
+    {{--<section class="mb-5">
         {{ $items->links() }}
-    </section>
+    </section>--}}
 @endsection
