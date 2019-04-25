@@ -2,13 +2,39 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Models\User;
+use App\Repositories\Contracts\UserRepository;
+use App\Repositories\Eloquent\EloquentBlogCategoryRepository;
 use Illuminate\Http\Request;
 use App\Models\BlogCategory;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Http\Requests\BlogCategoryCreateRequest;
+use App\Repositories\Contracts\BlogCategoryRepository;
 
 class CategoryController extends BaseController
 {
+    /**
+     * @var BlogCategoryRepository
+     */
+    protected $categories;
+
+    /**
+     * @var UserRepository
+     */
+    protected $users;
+
+    /**
+     * CategoryController constructor.
+     * @param BlogCategoryRepository $categories
+     * @param UserRepository $users
+     */
+    /*public function __construct(BlogCategoryRepository $categories, UserRepository $users)
+    {
+        $this->users = $users;
+        $this->categories = $categories;
+    }*/
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +42,13 @@ class CategoryController extends BaseController
      */
     public function index()
     {
+        /*dump($this->categories->create([
+            'title' => 'Created Category',
+            'slug' => ''
+        ]));
+        dump($this->users->find(1));
+        dd($this->categories->all());*/
+
         $items = BlogCategory::paginate(5);
         return view('blog.admin.categories.index', compact('items'));
     }
@@ -75,6 +108,7 @@ class CategoryController extends BaseController
      */
     public function update(BlogCategoryUpdateRequest $request, BlogCategory $category)
     {
+//        dd($category);
         $data = $request->input();
 
         // TODO: generate slug before validation in Requests
@@ -87,17 +121,6 @@ class CategoryController extends BaseController
         //TODO: Handle Db update Error
 
         return back()->with("success", "Category was updated");
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\BlogCategory $blogCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BlogCategory $blogCategory)
-    {
-        dd(__METHOD__);
     }
 
     /**
