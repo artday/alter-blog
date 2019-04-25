@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\BlogCategory;
+use App\Repositories\Contracts\BlogCategoryRepository;
+use App\Repositories\Eloquent\EloquentBlogCategoryRepository;
+use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
