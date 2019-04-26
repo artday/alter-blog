@@ -12,11 +12,4 @@ class EloquentUserRepository extends RepositoryAbstract implements UserRepositor
     {
         return User::class;
     }
-
-    /*
-
-    public function all()
-    {
-        return User::all();
-    }*/
 }
