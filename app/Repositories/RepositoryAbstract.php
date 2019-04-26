@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use App\Repositories\Exceptions\NoEntityDefined;
 use App\Repositories\Criteria\CriteriaInterface;
 use App\Repositories\Contracts\RepositoryInterface;
@@ -12,7 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterface
 {
     /**
-     * @var Model|Builder
+     * @var \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
      */
     protected $entity;
 
@@ -32,7 +30,7 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
 
     /**
      * @param $id
-     * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null|static|static[]
      */
     public function find($id)
     {
@@ -52,7 +50,7 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     /**
      * @param $column
      * @param $value
-     * @return Model|null|object|static
+     * @return \Illuminate\Database\Eloquent\Model|null|object|static
      */
     public function findWhereFirst($column, $value)
     {
@@ -70,16 +68,29 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
         return $this->entity->paginate($perPage, $columns);
     }
 
+    /**
+     * @param array $properties
+     * @return $this|\Illuminate\Database\Eloquent\Model
+     */
     public function create(array $properties)
     {
         return $this->entity->create($properties);
     }
 
+    /**
+     * @param $id
+     * @param array $properties
+     * @return bool
+     */
     public function update($id, array $properties)
     {
         return $this->find($id)->update($properties);
     }
 
+    /**
+     * @param $id
+     * @return bool|null
+     */
     public function delete($id)
     {
         return $this->find($id)->delete();
@@ -99,6 +110,10 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
         return $this;
     }
 
+    /**
+     * @param $model
+     * @return mixed
+     */
     protected function modelOrFail($model)
     {
         if (!$model) {
@@ -109,7 +124,7 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
-     * @return Model|Builder
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
      * @throws NoEntityDefined
      */
     protected function resolveEntity()
