@@ -5,16 +5,16 @@
 @endif
 @if (session('danger'))
     <div class="alert alert-danger" role="alert">
-        Success: {{ session('danger') }}
+        Danger: {{ session('danger') }}
     </div>
 @endif
 @if (session('warning'))
     <div class="alert alert-warning" role="alert">
-        Success: {{ session('warning') }}
+        Warning: {{ session('warning') }}
     </div>
 @endif
 @if (session('info'))
     <div class="alert alert-info" role="alert">
-        Success: {{ session('info') }}
+        Info: {{ session('info') }}
     </div>
 @endif
