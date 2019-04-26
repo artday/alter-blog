@@ -22,11 +22,12 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
     }
 
     /**
+     * @param array $columns
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function all()
+    public function all($columns = ['*'])
     {
-        return $this->entity->get();
+        return $this->entity->get($columns);
     }
 
     /**
@@ -59,9 +60,14 @@ abstract class RepositoryAbstract implements RepositoryInterface, CriteriaInterf
         return $this->modelOrFail($this->entity->where($column, $value)->first());
     }
 
-    public function paginate($perPage = 10)
+    /**
+     * @param int $perPage
+     * @param array $columns
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function paginate($perPage = 10, $columns = ['*'])
     {
-        return $this->entity->paginate($perPage);
+        return $this->entity->paginate($perPage, $columns);
     }
 
     public function create(array $properties)
