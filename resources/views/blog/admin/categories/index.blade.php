@@ -20,7 +20,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($items as $item)
+                        @foreach($categories as $item)
                             @php /** @var \App\Models\BlogCategory $item*/ @endphp
                             <tr>
                                 <td>{{ $item->id }}</td>
@@ -37,9 +37,9 @@
                         </tbody>
                     </table>
                 </div>
-                @if($items->total() > $items->count())
+                @if($categories->total() > $categories->count())
                     <div class="card-footer bg-white border-top-0 d-flex justify-content-center">
-                        {{ $items->links() }}
+                        {{ $categories->links() }}
                     </div>
                 @endif
             </div>
