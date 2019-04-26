@@ -17,9 +17,11 @@
             </button>
         </div>
     @endif
-    <form action="{{route('blog.admin.categories.destroy', $category->id)}}" method="post">
-        @csrf @method('DELETE')
-        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-    </form>
+    {{--
+        <form action="{{route('blog.admin.categories.destroy', $category->id)}}" method="post">
+            @csrf @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+    --}}
     @include('blog.admin.categories.partials.form')
 @endsection
