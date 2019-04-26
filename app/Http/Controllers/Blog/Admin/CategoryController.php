@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
-use App\Models\User;
-use App\Repositories\Contracts\UserRepository;
-use App\Repositories\Eloquent\EloquentBlogCategoryRepository;
-use Illuminate\Http\Request;
 use App\Models\BlogCategory;
+
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Http\Requests\BlogCategoryCreateRequest;
+
+use App\Repositories\Contracts\UserRepository;
 use App\Repositories\Contracts\BlogCategoryRepository;
 
 class CategoryController extends BaseController
@@ -28,79 +27,66 @@ class CategoryController extends BaseController
      * @param BlogCategoryRepository $categories
      * @param UserRepository $users
      */
-    /*public function __construct(BlogCategoryRepository $categories, UserRepository $users)
+    public function __construct(BlogCategoryRepository $categories, UserRepository $users)
     {
+        parent::__constructor();
         $this->users = $users;
         $this->categories = $categories;
-    }*/
-
+    }
 
     /**
-     * Display a listing of the resource.
+     * Display a list of categories.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        /*dump($this->categories->create([
-            'title' => 'Created Category',
-            'slug' => ''
-        ]));
-        dump($this->users->find(1));
-        dd($this->categories->all());*/
-
-        $items = BlogCategory::paginate(5);
-        return view('blog.admin.categories.index', compact('items'));
+        $columns = ['id', 'parent_id', 'title'];
+        $categories = $this->categories->paginate(10, $columns);
+        return view('blog.admin.categories.index', compact('categories'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show category creating form.
      *
      * @param BlogCategory $category
      * @return \Illuminate\Http\Response
      */
     public function create(BlogCategory $category)
     {
-        /*$category = new BlogCategory;*/
-        $categories = BlogCategory::all();
+        $columns = ['title', 'id'];
+        $categories = $this->categories->all($columns);
         return view('blog.admin.categories.create', compact('category', 'categories'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Storing new category.
      *
      * @param  \App\Http\Requests\BlogCategoryCreateRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(BlogCategoryCreateRequest $request)
     {
-        $data = $request->input();
-
-        // TODO: generate slug before validation in Requests
-        if(empty($data['slug'])){
-            $data['slug'] = str_slug($data['title']);
-        }
-
-        $category = BlogCategory::create($data);
-
-        return $category ? $this->index() : back()->with('danger', "Database saving in database");
+        $category = $this->categories->create($request->validated());
+        return $category ? $this->index() : back()->with('danger', "Database saving error");
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show category edit form.
      *
      * @param  \App\Models\BlogCategory $category
      * @return \Illuminate\Http\Response
      */
     public function edit(BlogCategory $category)
     {
+        $columns = ['title', 'id'];
         /* Get categories for parent category selection list */
-        $categories = BlogCategory::where('id', '<>', $category->id)->get(['id', 'title']);
+        $categories = $this->categories->all($columns)->except($category->id);
         return view('blog.admin.categories.edit', compact('category', 'categories'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Updating category.
      *
      * @param  \App\Http\Requests\BlogCategoryUpdateRequest $request
      * @param BlogCategory $category
@@ -108,29 +94,20 @@ class CategoryController extends BaseController
      */
     public function update(BlogCategoryUpdateRequest $request, BlogCategory $category)
     {
-//        dd($category);
-        $data = $request->input();
-
-        // TODO: generate slug before validation in Requests
-        if(empty($data['slug'])){
-            $data['slug'] = str_slug($data['title']);
-        }
-
-        $category->update($data);
-
-        //TODO: Handle Db update Error
-
+        $category->update($request->validated());
         return back()->with("success", "Category was updated");
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deleting category.
      *
-     * @param  \App\Models\BlogCategory $blogCategory
+     * @param BlogCategory $category
      * @return \Illuminate\Http\Response
+     * @internal param BlogCategory $blogCategory
      */
-    public function destroy(BlogCategory $blogCategory)
+    public function destroy(BlogCategory $category)
     {
-        //
+        //TODO: implement deleting model
+        return back()->with('danger', "Deleting not implemented yet");
     }
 }
