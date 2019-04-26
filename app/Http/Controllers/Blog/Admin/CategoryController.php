@@ -24,12 +24,13 @@ class CategoryController extends BaseController
 
     /**
      * CategoryController constructor.
+     *
      * @param BlogCategoryRepository $categories
      * @param UserRepository $users
      */
     public function __construct(BlogCategoryRepository $categories, UserRepository $users)
     {
-        parent::__constructor();
+        parent::__construct();
         $this->users = $users;
         $this->categories = $categories;
     }
