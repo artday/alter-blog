@@ -23,6 +23,7 @@ Route::namespace('Blog\Admin')->prefix('admin/blog')->name('blog.admin.categorie
         Route::put('/categories', 'CategoryController@store')->name('store');
         Route::get('/categories/create', 'CategoryController@create')->name('create');
         Route::patch('/categories/{category}', 'CategoryController@update')->name('update');
+        Route::delete('/categories/{category}', 'CategoryController@destroy')->name('destroy');
 
 
        /* Route::resource('categories', 'CategoryController')
