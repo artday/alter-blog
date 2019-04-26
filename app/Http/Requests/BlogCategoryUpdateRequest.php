@@ -32,4 +32,12 @@ class BlogCategoryUpdateRequest extends FormRequest
             'parent_id' => 'nullable|integer|exists:blog_categories,id',
         ];
     }
+
+    public function prepareForValidation()
+    {
+        // Generate slug from title before validation if it empty
+        if ($this->has(['slug','title']) && $this->filled('title') && !$this->filled('slug')){
+            $this->request->set('slug', str_slug($this->title));
+        }
+    }
 }
