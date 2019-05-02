@@ -18,6 +18,11 @@ class EloquentBlogPostRepository extends RepositoryAbstract implements BlogPostR
         return BlogPost::class;
     }
 
+    public function findBySlug($slug)
+    {
+        return $this->findWhereFirst('slug', $slug);
+    }
+
     /*public function allLive($paginate = 10)
     {
         return $this->entity->where('is_published', true)->paginate($paginate);
