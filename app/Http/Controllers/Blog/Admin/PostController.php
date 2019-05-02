@@ -2,25 +2,35 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
-use App\Repositories\Contracts\BlogPostRepository;
+use App\Models\BlogPost;
+use App\Repositories\Contracts\BlogCategoryRepository;
+use App\Repositories\Eloquent\Criteria\EagerLoad;
 use Illuminate\Http\Request;
+use App\Repositories\Contracts\BlogPostRepository;
 
 class PostController extends BaseController
 {
     /**
      * @var BlogPostRepository
      */
-    protected $posts;
+    private $posts;
+
+    /**
+     * @var BlogCategoryRepository
+     */
+    private $categories;
 
     /**
      * PostController constructor.
      *
      * @param BlogPostRepository $posts
+     * @param BlogCategoryRepository $categories
      */
-    public function __construct(BlogPostRepository $posts)
+    public function __construct(BlogPostRepository $posts, BlogCategoryRepository $categories)
     {
         parent::__construct();
         $this->posts = $posts;
+        $this->categories = $categories;
     }
 
     /**
@@ -30,7 +40,11 @@ class PostController extends BaseController
      */
     public function index()
     {
-        //
+        $columns = ['id', 'title', 'slug', 'category_id'];
+        $posts = $this->posts
+            ->withCriteria(new EagerLoad(['category']))
+            ->paginate(20, $columns);
+        return view('blog.admin.posts.index', compact('posts'));
     }
 
     /**
@@ -40,7 +54,7 @@ class PostController extends BaseController
      */
     public function create()
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -51,51 +65,47 @@ class PostController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        dd(__METHOD__);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(BlogPost $post)
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(/*BlogPost $post*/ $slug)
     {
-        //
+        $post = $this->posts->findBySlug($slug);
+        $categories = $this->categories->all(['title', 'id']);
+        return view('blog.admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param BlogPost $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, BlogPost $post)
     {
-        //
+        dd(__METHOD__, $post);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param BlogPost $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(BlogPost $post)
     {
-        //
+        dd(__METHOD__, $post);
     }
 }
