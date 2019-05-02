@@ -73,6 +73,7 @@
         </nav>
 
         <main class="py-4 container">
+            {{--@include('layouts.partials.breadcrumbs')--}}
             @include('layouts.partials.alerts')
             @yield('content')
         </main>
